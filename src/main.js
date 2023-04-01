@@ -21,6 +21,7 @@ const {
   network,
   solanaMetadata,
   gif,
+  mp4,
 } = require(`${basePath}/src/config.js`);
 const canvas = createCanvas(format.width, format.height);
 const ctx = canvas.getContext("2d");
@@ -40,8 +41,8 @@ const buildSetup = () => {
   fs.mkdirSync(buildDir);
   fs.mkdirSync(`${buildDir}/json`);
   fs.mkdirSync(`${buildDir}/images`);
-  if (gif.export) {
-    fs.mkdirSync(`${buildDir}/gifs`);
+  if (mp4.export) {
+    fs.mkdirSync(`${buildDir}/mp4s`);
   }
 };
 
@@ -112,7 +113,7 @@ const layersSetup = (layersOrder) => {
 
 const saveImage = (_editionCount) => {
   fs.writeFileSync(
-    `${buildDir}/images/${_editionCount}.png`,
+    `${buildDir}/images/${_editionCount}.mp4`,
     canvas.toBuffer("image/png")
   );
 };
@@ -133,7 +134,7 @@ const addMetadata = (_dna, _edition) => {
   let tempMetadata = {
     name: `${namePrefix} #${_edition}`,
     description: description,
-    image: `${baseUri}/${_edition}.png`,
+    image: `${baseUri}/${_edition}.mp4`,
     dna: sha1(_dna),
     edition: _edition,
     date: dateTime,
@@ -158,8 +159,8 @@ const addMetadata = (_dna, _edition) => {
       properties: {
         files: [
           {
-            uri: `${_edition}.png`,
-            type: "image/png",
+            uri: `${_edition}.mp4`,
+            type: "image/mp4",
           },
         ],
         category: "image",
